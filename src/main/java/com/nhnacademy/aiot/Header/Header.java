@@ -13,6 +13,10 @@ public abstract class Header {
 
     public abstract String getFristHeaderLine();
 
+    public Object getHeaderMap() {
+        return null;
+    }
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
