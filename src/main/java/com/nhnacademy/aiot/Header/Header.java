@@ -1,0 +1,15 @@
+package com.nhnacademy.aiot.Header;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public abstract class Header {
+    protected static final String HTTP_VERSION = "HTTP/1.1/"; // final에서는 값을 고정해야하니 주소 값을 지정해준다.
+    private final Map<String, String> headerMap = new HashMap<>();
+
+    public void addHeader(String key, String value) {
+        headerMap.put(key, value); // 키 값 지정
+    }
+
+    public abstract String getFristHeaderLine();
+}
