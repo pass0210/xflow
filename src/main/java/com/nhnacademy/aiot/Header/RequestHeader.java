@@ -11,7 +11,7 @@ public class RequestHeader extends Header {
     }
 
     @Override
-    public String getFristHeaderLine() { 
-       return method + " " + resource + " " + HTTP_VERSION;
+    public String getFristHeaderLine() {
+        return method + " " + resource + " " + HTTP_VERSION;
     }
 }
