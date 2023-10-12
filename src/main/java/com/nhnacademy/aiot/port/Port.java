@@ -3,14 +3,16 @@ package com.nhnacademy.aiot.port;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import com.nhnacademy.aiot.Message.Message;
+
 public class Port {
-    Queue<Messaage> messageQueue;
+    Queue<Message> messageQueue;
 
     public Port() {
         messageQueue = new LinkedList<>();
     }
 
-    public void put(Message messsage) {
+    public void put(Message message) {
         messageQueue.add(message);
     }
 
