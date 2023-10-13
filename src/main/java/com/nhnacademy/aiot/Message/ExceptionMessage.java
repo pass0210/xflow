@@ -1,13 +1,13 @@
 package com.nhnacademy.aiot.Message;
 
+import java.net.Socket;
+
 import com.nhnacademy.aiot.Header.Header;
 import com.nhnacademy.aiot.body.Body;
 
 public class ExceptionMessage extends Message {
-    
-
-    public ExceptionMessage(Header header, Body body) {
-        super(header, body);
+    public ExceptionMessage(Header header, Body body, Socket socket) {
+        super(header, body, socket);
     }
 
     @Override
@@ -15,5 +15,4 @@ public class ExceptionMessage extends Message {
         return getBody().getData();
     }
 
-    
 }
