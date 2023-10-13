@@ -16,5 +16,5 @@ public class ResponseHeader extends Header  {
         return HTTP_VERSION + " " + statusCode + " " + statusMessage;
         
     }
-
 }
+
