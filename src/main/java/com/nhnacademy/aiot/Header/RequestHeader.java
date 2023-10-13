@@ -1,5 +1,8 @@
 package com.nhnacademy.aiot.Header;
 
+import lombok.Getter;
+
+@Getter
 public class RequestHeader extends Header {
 
     private final String method;
