@@ -1,4 +1,4 @@
-package com.nhnacademy.aiot.spliter;
+package com.nhnacademy.aiot.splitter;
 
 import java.util.Iterator;
 
