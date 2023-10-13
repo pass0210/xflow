@@ -1,6 +1,6 @@
 package com.nhnacademy.aiot.checker;
 
-import java.util.stream.Stream;
+import java.util.Iterator;
 
 public class FormatChecker implements Checker {
     private String header;
@@ -17,6 +17,7 @@ public class FormatChecker implements Checker {
         String[] splitFirstLine = firstLine.split(" ");
         String method = splitFirstLine[0];
         String version = splitFirstLine[2];
+
         return methodCheck(method) && versionCheck(version) && headerMapCheck();
     }
 
@@ -37,18 +38,20 @@ public class FormatChecker implements Checker {
     }
 
     private boolean headerMapCheck() {
-        String[] lines = (String[]) header.lines().toArray();
+        boolean flag = false;
+        Iterator<String> iter = header.lines().iterator();
 
-        for (int i = 1; i < lines.length; i++) {
-            if (!lines[i].matches("[a-zA-Z\\-]+: .+")) {
+        while (iter.hasNext()) {
+            if (!flag) {
+                flag = true;
+                iter.next();
+                continue;
+            }
+            if (!iter.next().matches("[a-zA-Z\\-]+: .+")) {
                 return false;
             }
         }
 
         return true;
-    }
-
-    public static void main(String[] args) {
-
     }
 }

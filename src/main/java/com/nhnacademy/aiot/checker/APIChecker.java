@@ -1,18 +1,15 @@
 package com.nhnacademy.aiot.checker;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 import com.nhnacademy.aiot.Header.Header;
-import com.nhnacademy.aiot.Header.RequestHeader;
 
 public class APIChecker implements Checker {
     private Map<String, List<String>> headerMap;
     private Header header;
 
     public APIChecker(Map<String, List<String>> headerMap, Header header) {
-        this.headerMap = headerMap = headerMap;
+        this.headerMap = headerMap;
         this.header = header;
     }
 
@@ -30,20 +27,5 @@ public class APIChecker implements Checker {
         }
 
         return flag;
-    }
-
-    public static void main(String[] args) {
-        Map<String, List<String>> headerMap = new HashMap<>();
-        List<String> apis = new ArrayList<>();
-        apis.add("/");
-        apis.add("/dev");
-        apis.add("/dev/.+");
-        apis.add("/ep");
-        apis.add("/ep/\\w+/[a-zA-Z0-9|-]+(\\?.+)?");
-        headerMap.put("GET", apis);
-        Header header = new RequestHeader("GET", "/ep/temporate/asdlkfja?sdafhaksdjf");
-
-        APIChecker apiChecker = new APIChecker(headerMap, header);
-        System.out.println(apiChecker.check());
     }
 }
