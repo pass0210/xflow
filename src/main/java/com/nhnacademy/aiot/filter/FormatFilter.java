@@ -56,20 +56,22 @@ public class FormatFilter extends OutputNode {
                     // 0번 true, 1번 false
                     if (formatChecker.check()) {
                         // 메시지 생성
-                        RequestMessage requestMessage = messageGenerator.generateMessage(headerString, bodyString);
+                        RequestMessage requestMessage = messageGenerator.generateMessage(headerString, bodyString,
+                                socket);
                         System.out.println(requestMessage.getMessage());
                         // output(0, requestMessage);
                     } else {
 
                         // TODO
                         // 예외 메시지 생성
-                        ExceptionMessage exceptionMessage = new ExceptionMessage(null, new Body("Exception TEST"));
+                        ExceptionMessage exceptionMessage = new ExceptionMessage(null, new Body("Exception TEST"),
+                                socket);
 
                         ResponseHeader responseHeader = new ResponseHeader("404", "Not Found");
                         Body responseBody = new Body("Response TEST"); // HTML code 작성
                         ResponseMessageGenerator responseMessageGenerator = new ResponseMessageGenerator(responseHeader,
                                 responseBody);
-                        ResponseMessage responseMessage = responseMessageGenerator.generate();
+                        ResponseMessage responseMessage = responseMessageGenerator.generate(socket);
                         // output(1, exceptionMessage);
                         // output(1, responseMessage);
                         System.out.println(exceptionMessage.getMessage());
