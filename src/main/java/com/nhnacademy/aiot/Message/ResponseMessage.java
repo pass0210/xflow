@@ -12,4 +12,5 @@ public class ResponseMessage extends Message {
     public String getMessage() {
         return getHeader().toString() + System.lineSeparator() + getBody().getData();
     }
+
 }
