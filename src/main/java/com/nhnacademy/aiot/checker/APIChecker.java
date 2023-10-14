@@ -1,8 +1,11 @@
 package com.nhnacademy.aiot.checker;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.nhnacademy.aiot.Header.Header;
+import com.nhnacademy.aiot.Header.RequestHeader;
 
 public class APIChecker implements Checker {
     private Map<String, List<String>> headerMap;

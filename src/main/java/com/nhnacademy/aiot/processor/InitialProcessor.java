@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class InitialProcessor extends InputOutputNode {
 
-  protected InitialProcessor(int inputCount, int outputCount) {
+  public InitialProcessor(int inputCount, int outputCount) {
     super(inputCount, outputCount);
   }
 
@@ -28,7 +28,7 @@ public class InitialProcessor extends InputOutputNode {
         waitMessage();
         Message requestMessage = getInputPort(0).get();
 
-        File file = new File("www/index.html");
+        File file = new File("index.html");
         try (BufferedReader fileReader = new BufferedReader(new FileReader(file))) {
           // index.html 파일 읽어 body에 담기
           StringBuilder contents = new StringBuilder();
@@ -39,7 +39,7 @@ public class InitialProcessor extends InputOutputNode {
 
           // Header 만들기
           ResponseHeader header = new ResponseHeader("200", "OK");
-          header.addHeader("Content-Type", "text/html");
+          header.addHeader("Content-Type", "text/html; charset=utf-8");
           header.addHeader("Content-Length", String.valueOf(body.getData().length()));
 
           // Message 만들기

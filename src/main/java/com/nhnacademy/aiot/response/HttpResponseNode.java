@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class HttpResponseNode extends InputOutputNode {
-    protected HttpResponseNode(int inputCount, int outputCount) {
+    public HttpResponseNode(int inputCount, int outputCount) {
         super(inputCount, outputCount);
     }
 

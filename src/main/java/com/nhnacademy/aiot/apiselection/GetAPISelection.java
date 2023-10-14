@@ -8,33 +8,35 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GetAPISelection extends InputOutputNode {
 
-    protected GetAPISelection(int inputCount, int outputCount) {
+    public GetAPISelection(int inputCount, int outputCount) {
         super(inputCount, outputCount);
     }
 
     @Override
     public void run() {
-        try {
-            waitMessage();
-            Message message = getInputPort(0).get();
-            String api = takeApi(message);
+        while (!Thread.currentThread().isInterrupted()) {
+            try {
+                waitMessage();
 
-            if (api.matches("/")) {
-                output(0, message);
-            } else if (api.matches("/dev")) {
-                output(1, message);
-            } else if (api.matches("\\/dev(\\/[a-zA-Z0-9|\\-]+)?")) {
-                output(2, message);
-            } else if (api.matches("/ep")) {
-                output(3, message);
-            } else if (api.matches("\\/ep\\/\\w+\\/[a-zA-Z0-9|\\\\-]+(\\?.+)?")) {
-                output(4, message);
+                Message message = getInputPort(0).get();
+                String api = takeApi(message);
+
+                if (api.matches("/")) {
+                    output(0, message);
+                } else if (api.matches("/dev")) {
+                    output(1, message);
+                } else if (api.matches("\\/dev(\\/[a-zA-Z0-9|\\-]+)?")) {
+                    output(2, message);
+                } else if (api.matches("/ep")) {
+                    output(3, message);
+                } else if (api.matches("\\/ep\\/\\w+\\/[a-zA-Z0-9|\\\\-]+(\\?.+)?")) {
+                    output(4, message);
+                }
+            } catch (InterruptedException e) {
+                log.error(e.getMessage());
+                Thread.currentThread().interrupt();
             }
-        } catch (InterruptedException e) {
-            log.error(e.getMessage());
-            Thread.currentThread().interrupt();
         }
-
     }
 
     private String takeApi(Message message) {

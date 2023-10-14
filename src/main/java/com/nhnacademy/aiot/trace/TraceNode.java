@@ -6,23 +6,23 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class TraceNode extends InputNode {
-    protected TraceNode(int inputCount) {
+    public TraceNode(int inputCount) {
         super(inputCount);
     }
 
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
-           try {
+            try {
                 waitMessage();
 
                 Message message = getInputPort(0).get();
 
                 log.error(message.getMessage());
-           } catch (InterruptedException e) {
-               Thread.currentThread().interrupt();
-               log.error(e.getMessage());
-           }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                log.error(e.getMessage());
+            }
         }
     }
 }
