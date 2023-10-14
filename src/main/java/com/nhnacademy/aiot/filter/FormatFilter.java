@@ -49,7 +49,8 @@ public class FormatFilter extends OutputNode {
 
                         // 새로고침 검사
                         if (isReloadCall(builder.toString())) {
-                            headerString = "GET / HTTP/1.1";
+                            socket.close();
+                            throw new IOException("빈값");
                         }
 
                         // 0번 true, 1번 false
