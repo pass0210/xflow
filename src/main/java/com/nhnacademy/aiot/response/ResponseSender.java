@@ -12,7 +12,7 @@ import java.net.Socket;
 @Slf4j
 public class ResponseSender extends InputNode {
 
-    protected ResponseSender(int inputCount) {
+    public ResponseSender(int inputCount) {
         super(inputCount);
     }
 
