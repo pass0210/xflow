@@ -1,18 +1,17 @@
 package com.nhnacademy.aiot.processor;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-
 import com.nhnacademy.aiot.Header.ResponseHeader;
 import com.nhnacademy.aiot.Message.Message;
 import com.nhnacademy.aiot.Message.ResponseMessage;
 import com.nhnacademy.aiot.body.Body;
 import com.nhnacademy.aiot.generator.ResponseMessageGenerator;
 import com.nhnacademy.aiot.node.InputOutputNode;
-
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 @Slf4j
 public class InitialProcessor extends InputOutputNode {
@@ -30,7 +29,7 @@ public class InitialProcessor extends InputOutputNode {
 
         File file = new File("index.html");
         try (BufferedReader fileReader = new BufferedReader(new FileReader(file))) {
-          // index.html 파일 읽어 body에 담기
+          // index.html 파일 읽어 body 담기
           StringBuilder contents = new StringBuilder();
           while (fileReader.ready()) {
             contents.append((char) fileReader.read());
