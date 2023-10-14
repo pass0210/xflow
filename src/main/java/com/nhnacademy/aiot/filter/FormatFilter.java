@@ -1,24 +1,17 @@
 package com.nhnacademy.aiot.filter;
 
+import com.nhnacademy.aiot.Message.RequestMessage;
+import com.nhnacademy.aiot.checker.FormatChecker;
+import com.nhnacademy.aiot.generator.RequestMessageGenerator;
+import com.nhnacademy.aiot.node.OutputNode;
+import com.nhnacademy.aiot.splitter.RequestMessageSplitter;
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-
-import com.nhnacademy.aiot.Header.ResponseHeader;
-import com.nhnacademy.aiot.Message.ExceptionMessage;
-import com.nhnacademy.aiot.Message.Message;
-import com.nhnacademy.aiot.Message.RequestMessage;
-import com.nhnacademy.aiot.Message.ResponseMessage;
-import com.nhnacademy.aiot.body.Body;
-import com.nhnacademy.aiot.checker.FormatChecker;
-import com.nhnacademy.aiot.generator.RequestMessageGenerator;
-import com.nhnacademy.aiot.generator.ResponseMessageGenerator;
-import com.nhnacademy.aiot.node.OutputNode;
-import com.nhnacademy.aiot.splitter.RequestMessageSplitter;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class FormatFilter extends OutputNode {
@@ -54,6 +47,11 @@ public class FormatFilter extends OutputNode {
                         // 메시지 포맷 검사
                         FormatChecker formatChecker = new FormatChecker(headerString, bodyString);
 
+                        // 새로고침 검사
+                        if (isReloadCall(builder.toString())) {
+                            headerString = "GET / HTTP/1.1";
+                        }
+
                         // 0번 true, 1번 false
                         if (formatChecker.check()) {
                             // 메시지 생성
@@ -61,11 +59,9 @@ public class FormatFilter extends OutputNode {
                             RequestMessage requestMessage = messageGenerator.generateMessage(headerString, bodyString,
                                     socket);
 
-                            log.info(requestMessage.getMessage());
-
                             output(0, requestMessage);
                         } else {
-                            log.error("exception message error");
+                            log.error("format filter exception");
                         }
                     } catch (IOException e) {
                         log.error(e.getMessage());
@@ -76,5 +72,9 @@ public class FormatFilter extends OutputNode {
         } catch (IOException e) { // 서버 소켓 예외 처리
             log.error(e.getMessage());
         }
+    }
+
+    private boolean isReloadCall(String message) {
+        return message.isEmpty();
     }
 }

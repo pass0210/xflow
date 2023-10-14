@@ -13,6 +13,8 @@ public class FormatChecker implements Checker {
 
     @Override
     public boolean check() {
+        if (header.isEmpty()) return true;
+
         String firstLine = header.lines().findFirst().get();
         String[] splitFirstLine = firstLine.split(" ");
         String method = splitFirstLine[0];
