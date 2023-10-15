@@ -1,9 +1,9 @@
 const emsapi = function () {
     'use strict';
     const api = new Object();
-    let testMode = true;
+    let testMode = false;
 
-    const SERVER_URL = 'http://localhost';
+    const SERVER_URL = 'http://localhost:3000';
     const JSON_FORMAT = 'json';
 
     api.getTemperature = async function (startDt, endDt, unit) {
