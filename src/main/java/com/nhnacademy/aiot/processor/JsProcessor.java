@@ -1,6 +1,5 @@
 package com.nhnacademy.aiot.processor;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -23,27 +22,25 @@ public class JsProcessor extends InputOutputNode {
 
     @Override
     public void run() {
-        while (Thread.currentThread().isInterrupted()) {
+        while (!Thread.currentThread().isInterrupted()) {
             try {
                 waitMessage();
 
                 Message requestMessage = getInputPort(0).get();
 
-                log.info(requestMessage.getMessage());
-
                 File file = new File("www/common.js");
-                try (BufferedReader fileReader = new BufferedReader(new FileReader(file))) {
+                try (FileReader reader = new FileReader(file)) {
                     // index.html 파일 읽어 body 담기
                     StringBuilder contents = new StringBuilder();
-                    while (fileReader.ready()) {
-                        contents.append((char) fileReader.read());
+                    while (reader.ready()) {
+                        contents.append((char) reader.read());
                     }
                     Body body = new Body(contents.toString());
 
                     // Header 만들기
                     ResponseHeader header = new ResponseHeader("200", "OK");
-                    header.addHeader("Content-Type", "application/javascript; charset=utf-8");
-                    header.addHeader("Content-Length", String.valueOf(body.getData().length()));
+                    header.addHeader("Content-Type", "application/javascript; charset=UTF-8");
+                    header.addHeader("Content-Length", String.valueOf(contents.length()));
 
                     // Message 만들기
                     ResponseMessageGenerator messageGenerator = new ResponseMessageGenerator(header, body);
