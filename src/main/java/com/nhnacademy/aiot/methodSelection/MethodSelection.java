@@ -21,6 +21,7 @@ public class MethodSelection extends InputOutputNode {
                 String method = takeMethod(message);
 
                 if (method.equalsIgnoreCase("GET")) {
+                    log.info("method selection = {}", message.getMessage());
                     output(0, message);
                 } else if (method.equalsIgnoreCase("POST")) {
                     output(1, message);
