@@ -35,6 +35,8 @@ public class GetAPISelection extends InputOutputNode {
                     output(5, message);
                 } else if (api.matches("\\/temperature")) {
                     output(6, message);
+                } else if (api.matches("\\/humidity")) {
+                    output(7, message);
                 }
             } catch (InterruptedException e) {
                 log.error(e.getMessage());
