@@ -1,8 +1,8 @@
-package com.nhnacademy.aiot.response;
+package com.nhnacademy.aiot.node.response;
 
-import com.nhnacademy.aiot.Message.ExceptionMessage;
-import com.nhnacademy.aiot.Message.Message;
-import com.nhnacademy.aiot.Message.ResponseMessage;
+import com.nhnacademy.aiot.message.ExceptionMessage;
+import com.nhnacademy.aiot.message.Message;
+import com.nhnacademy.aiot.message.ResponseMessage;
 import com.nhnacademy.aiot.node.InputOutputNode;
 import lombok.extern.slf4j.Slf4j;
 

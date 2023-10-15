@@ -2,7 +2,7 @@ package com.nhnacademy.aiot.port;
 
 import java.util.LinkedList;
 import java.util.Queue;
-import com.nhnacademy.aiot.Message.Message;
+import com.nhnacademy.aiot.message.Message;
 
 public class Port {
     Queue<Message> messageQueue;

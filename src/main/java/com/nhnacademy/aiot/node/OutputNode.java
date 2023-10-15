@@ -1,6 +1,6 @@
 package com.nhnacademy.aiot.node;
 
-import com.nhnacademy.aiot.Message.Message;
+import com.nhnacademy.aiot.message.Message;
 import com.nhnacademy.aiot.port.Port;
 
 public abstract class OutputNode extends ActiveNode{
