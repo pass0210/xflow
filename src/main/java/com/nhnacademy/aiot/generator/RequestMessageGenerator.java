@@ -1,5 +1,6 @@
 package com.nhnacademy.aiot.generator;
 
+import java.net.Socket;
 import java.util.Iterator;
 
 import com.nhnacademy.aiot.Header.RequestHeader;
@@ -7,11 +8,11 @@ import com.nhnacademy.aiot.Message.RequestMessage;
 import com.nhnacademy.aiot.body.Body;
 
 public class RequestMessageGenerator {
-    public RequestMessage generateMessage(String header, String body) {
+    public RequestMessage generateMessage(String header, String body, Socket socket) {
         RequestHeader requestHeader = generateHeader(header);
         Body requestBody = generateBody(body);
 
-        return new RequestMessage(requestHeader, requestBody);
+        return new RequestMessage(requestHeader, requestBody, socket);
     }
 
     private RequestHeader generateHeader(String header) {

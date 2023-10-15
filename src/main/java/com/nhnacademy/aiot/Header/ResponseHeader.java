@@ -1,7 +1,9 @@
 package com.nhnacademy.aiot.Header;
 
 import org.json.HTTP;
+import lombok.Getter;
 
+@Getter
 public class ResponseHeader extends Header  {
     private final String statusCode;
     private final String statusMessage;
