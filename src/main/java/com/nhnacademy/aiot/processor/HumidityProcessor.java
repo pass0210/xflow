@@ -59,7 +59,7 @@ public class HumidityProcessor extends InputOutputNode {
                         }
                         reader.close();
 
-                        // JSON 데이터 파싱
+                        // 응답 출력
                         JSONObject jsonObject = new JSONObject(response.toString());
                         double humidity = jsonObject.getJSONObject("id").getJSONObject("status")
                                 .getJSONObject("sensor").getDouble("humidity");
@@ -75,7 +75,7 @@ public class HumidityProcessor extends InputOutputNode {
                         // 헤더 생성
                         ResponseHeader header = new ResponseHeader("200", "OK");
                         header.addHeader("Content-Type", "application/json; charset=UTF-8");
-                        header.addHeader("Content-Length", String.valueOf(body.getData().toString()));
+                        header.addHeader("Content-Length", String.valueOf(body.getData().length()));
 
                         // 메세지 생성
                         ResponseMessageGenerator messageGenerator = new ResponseMessageGenerator(header, body);
