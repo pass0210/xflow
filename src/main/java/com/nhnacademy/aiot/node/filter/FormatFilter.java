@@ -1,6 +1,6 @@
-package com.nhnacademy.aiot.filter;
+package com.nhnacademy.aiot.node.filter;
 
-import com.nhnacademy.aiot.Message.RequestMessage;
+import com.nhnacademy.aiot.message.RequestMessage;
 import com.nhnacademy.aiot.checker.FormatChecker;
 import com.nhnacademy.aiot.generator.RequestMessageGenerator;
 import com.nhnacademy.aiot.node.OutputNode;

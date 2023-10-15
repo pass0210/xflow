@@ -1,9 +1,9 @@
-package com.nhnacademy.aiot.filter;
+package com.nhnacademy.aiot.node.filter;
 
 import java.util.List;
 import java.util.Map;
-import com.nhnacademy.aiot.Header.Header;
-import com.nhnacademy.aiot.Message.Message;
+import com.nhnacademy.aiot.message.header.Header;
+import com.nhnacademy.aiot.message.Message;
 import com.nhnacademy.aiot.node.InputOutputNode;
 import lombok.extern.slf4j.Slf4j;
 import com.nhnacademy.aiot.checker.APIChecker;

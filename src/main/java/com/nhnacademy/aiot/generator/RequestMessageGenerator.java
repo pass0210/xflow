@@ -3,9 +3,9 @@ package com.nhnacademy.aiot.generator;
 import java.net.Socket;
 import java.util.Iterator;
 
-import com.nhnacademy.aiot.Header.RequestHeader;
-import com.nhnacademy.aiot.Message.RequestMessage;
-import com.nhnacademy.aiot.body.Body;
+import com.nhnacademy.aiot.message.header.RequestHeader;
+import com.nhnacademy.aiot.message.RequestMessage;
+import com.nhnacademy.aiot.message.body.Body;
 
 public class RequestMessageGenerator {
     public RequestMessage generateMessage(String header, String body, Socket socket) {

@@ -1,6 +1,6 @@
-package com.nhnacademy.aiot.trace;
+package com.nhnacademy.aiot.node.trace;
 
-import com.nhnacademy.aiot.Message.Message;
+import com.nhnacademy.aiot.message.Message;
 import com.nhnacademy.aiot.node.InputNode;
 import lombok.extern.slf4j.Slf4j;
 

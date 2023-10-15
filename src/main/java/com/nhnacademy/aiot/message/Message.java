@@ -1,9 +1,9 @@
-package com.nhnacademy.aiot.Message;
+package com.nhnacademy.aiot.message;
 
 import java.net.Socket;
 
-import com.nhnacademy.aiot.Header.Header;
-import com.nhnacademy.aiot.body.Body;
+import com.nhnacademy.aiot.message.header.Header;
+import com.nhnacademy.aiot.message.body.Body;
 import lombok.Getter;
 
 @Getter

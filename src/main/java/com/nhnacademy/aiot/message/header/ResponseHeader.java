@@ -1,6 +1,5 @@
-package com.nhnacademy.aiot.Header;
+package com.nhnacademy.aiot.message.header;
 
-import org.json.HTTP;
 import lombok.Getter;
 
 @Getter

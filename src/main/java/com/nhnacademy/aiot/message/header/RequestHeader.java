@@ -1,4 +1,4 @@
-package com.nhnacademy.aiot.Header;
+package com.nhnacademy.aiot.message.header;
 
 import lombok.Getter;
 
