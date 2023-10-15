@@ -10,6 +10,7 @@ import com.nhnacademy.aiot.filter.APIFilter;
 import com.nhnacademy.aiot.filter.FormatFilter;
 import com.nhnacademy.aiot.methodSelection.MethodSelection;
 import com.nhnacademy.aiot.processor.InitialProcessor;
+import com.nhnacademy.aiot.processor.JsProcessor;
 import com.nhnacademy.aiot.response.HttpResponseNode;
 import com.nhnacademy.aiot.response.ResponseSender;
 
@@ -22,8 +23,9 @@ public class Xflow {
         FormatFilter formatFilter = new FormatFilter(2);
         APIFilter apiFilter = new APIFilter(1, 2, apiMap);
         MethodSelection methodSelection = new MethodSelection(1, 4);
-        GetAPISelection getAPISelection = new GetAPISelection(1, 5);
+        GetAPISelection getAPISelection = new GetAPISelection(1, 6);
         InitialProcessor initialProcessor = new InitialProcessor(1, 1);
+        JsProcessor jsProcessor = new JsProcessor(1, 1);
         HttpResponseNode httpResponseNode = new HttpResponseNode(1, 2);
         ResponseSender responseSender = new ResponseSender(1);
 
@@ -31,7 +33,9 @@ public class Xflow {
         apiFilter.connect(0, methodSelection.getInputPort(0));
         methodSelection.connect(0, getAPISelection.getInputPort(0));
         getAPISelection.connect(0, initialProcessor.getInputPort(0));
+        getAPISelection.connect(5, jsProcessor.getInputPort(0));
         initialProcessor.connect(0, httpResponseNode.getInputPort(0));
+        jsProcessor.connect(0, httpResponseNode.getInputPort(0));
         httpResponseNode.connect(0, responseSender.getInputPort(0));
 
         formatFilter.start();
@@ -39,6 +43,7 @@ public class Xflow {
         methodSelection.start();
         getAPISelection.start();
         initialProcessor.start();
+        jsProcessor.start();
         httpResponseNode.start();
         responseSender.start();
     }
@@ -51,6 +56,7 @@ public class Xflow {
         resourceList.add("\\/dev(\\/[a-zA-Z0-9|\\-]+)?");
         resourceList.add("/ep");
         resourceList.add("\\/ep\\/\\w+\\/[a-zA-Z0-9|\\\\-]+(\\?.+)?");
+        resourceList.add("\\/common\\.js");
 
         apiMap.put("GET", resourceList);
     }

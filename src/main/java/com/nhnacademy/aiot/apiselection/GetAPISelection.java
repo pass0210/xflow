@@ -31,6 +31,9 @@ public class GetAPISelection extends InputOutputNode {
                     output(3, message);
                 } else if (api.matches("\\/ep\\/\\w+\\/[a-zA-Z0-9|\\\\-]+(\\?.+)?")) {
                     output(4, message);
+                } else if (api.matches("\\/common\\.js")) {
+                    log.info("api selection = {}", message.getMessage());
+                    output(5, message);
                 }
             } catch (InterruptedException e) {
                 log.error(e.getMessage());

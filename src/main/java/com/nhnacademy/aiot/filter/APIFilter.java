@@ -1,23 +1,20 @@
 package com.nhnacademy.aiot.filter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import com.nhnacademy.aiot.Header.Header;
-import com.nhnacademy.aiot.Header.ResponseHeader;
-import com.nhnacademy.aiot.Message.ExceptionMessage;
 import com.nhnacademy.aiot.Message.Message;
-import com.nhnacademy.aiot.Message.ResponseMessage;
-import com.nhnacademy.aiot.body.Body;
-import com.nhnacademy.aiot.generator.ResponseMessageGenerator;
 import com.nhnacademy.aiot.node.InputOutputNode;
 import lombok.extern.slf4j.Slf4j;
 import com.nhnacademy.aiot.checker.APIChecker;
 
 @Slf4j
 public class APIFilter extends InputOutputNode {
-    private ResponseMessageGenerator responseMessageGenerator;
-    private Map<String, List<String>> map;
+    // TODO
+    // run()문 안에 추가
+    // private ResponseMessageGenerator responseMessageGenerator;
+
+    private final Map<String, List<String>> map;
 
     public APIFilter(int inputCount, int outputCount, Map<String, List<String>> map) {
         super(inputCount, outputCount);
@@ -36,11 +33,13 @@ public class APIFilter extends InputOutputNode {
                 boolean flag = apiChecker.check();
 
                 if (flag) {
+                    log.info("APIFileter = {}", message.getMessage());
                     output(0, message);
                 } else {
                     log.error("exception message error");
                 }
             } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
                 log.error(e.getMessage());
             }
         }
