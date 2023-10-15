@@ -32,8 +32,9 @@ public class GetAPISelection extends InputOutputNode {
                 } else if (api.matches("\\/ep\\/\\w+\\/[a-zA-Z0-9|\\\\-]+(\\?.+)?")) {
                     output(4, message);
                 } else if (api.matches("\\/common\\.js")) {
-                    log.info("api selection = {}", message.getMessage());
                     output(5, message);
+                } else if (api.matches("\\/temperature")) {
+                    output(6, message);
                 }
             } catch (InterruptedException e) {
                 log.error(e.getMessage());
