@@ -9,6 +9,7 @@ import com.nhnacademy.aiot.apiselection.GetAPISelection;
 import com.nhnacademy.aiot.filter.APIFilter;
 import com.nhnacademy.aiot.filter.FormatFilter;
 import com.nhnacademy.aiot.methodSelection.MethodSelection;
+import com.nhnacademy.aiot.processor.HumidityProcessor;
 import com.nhnacademy.aiot.processor.InitialProcessor;
 import com.nhnacademy.aiot.processor.JsProcessor;
 import com.nhnacademy.aiot.processor.TemperatureProcessor;
@@ -25,11 +26,12 @@ public class Xflow {
         APIFilter apiFilter = new APIFilter(1, 2, apiMap);
 
         MethodSelection methodSelection = new MethodSelection(1, 4);
-        GetAPISelection getAPISelection = new GetAPISelection(1, 7);
+        GetAPISelection getAPISelection = new GetAPISelection(1, 8);
 
         InitialProcessor initialProcessor = new InitialProcessor(1, 1);
         JsProcessor jsProcessor = new JsProcessor(1, 1);
         TemperatureProcessor temperatureProcessor = new TemperatureProcessor(1, 1);
+        HumidityProcessor humidityProcessor = new HumidityProcessor(1, 1);
 
         HttpResponseNode httpResponseNode = new HttpResponseNode(1, 2);
         ResponseSender responseSender = new ResponseSender(1);
@@ -41,10 +43,12 @@ public class Xflow {
         getAPISelection.connect(0, initialProcessor.getInputPort(0));
         getAPISelection.connect(5, jsProcessor.getInputPort(0));
         getAPISelection.connect(6, temperatureProcessor.getInputPort(0));
+        getAPISelection.connect(7, humidityProcessor.getInputPort(0));
 
         initialProcessor.connect(0, httpResponseNode.getInputPort(0));
         jsProcessor.connect(0, httpResponseNode.getInputPort(0));
         temperatureProcessor.connect(0, httpResponseNode.getInputPort(0));
+        humidityProcessor.connect(0, httpResponseNode.getInputPort(0));
 
         httpResponseNode.connect(0, responseSender.getInputPort(0));
 
@@ -57,6 +61,7 @@ public class Xflow {
         initialProcessor.start();
         jsProcessor.start();
         temperatureProcessor.start();
+        humidityProcessor.start();
 
         httpResponseNode.start();
         responseSender.start();
@@ -72,6 +77,7 @@ public class Xflow {
         resourceList.add("\\/ep\\/\\w+\\/[a-zA-Z0-9|\\\\-]+(\\?.+)?");
         resourceList.add("\\/common\\.js");
         resourceList.add("\\/temperature");
+        resourceList.add("\\/humidity");
 
         apiMap.put("GET", resourceList);
     }
