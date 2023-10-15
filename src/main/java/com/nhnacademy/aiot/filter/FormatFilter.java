@@ -47,12 +47,6 @@ public class FormatFilter extends OutputNode {
                         // 메시지 포맷 검사
                         FormatChecker formatChecker = new FormatChecker(headerString, bodyString);
 
-                        // 새로고침 검사
-                        if (isReloadCall(builder.toString())) {
-                            socket.close();
-                            throw new IOException("빈값");
-                        }
-
                         // 0번 true, 1번 false
                         if (formatChecker.check()) {
                             // 메시지 생성
@@ -62,7 +56,7 @@ public class FormatFilter extends OutputNode {
 
                             output(0, requestMessage);
                         } else {
-                            log.error("format filter exception");
+                            socket.close();
                         }
                     } catch (IOException e) {
                         log.error(e.getMessage());
@@ -73,9 +67,5 @@ public class FormatFilter extends OutputNode {
         } catch (IOException e) { // 서버 소켓 예외 처리
             log.error(e.getMessage());
         }
-    }
-
-    private boolean isReloadCall(String message) {
-        return message.isEmpty();
     }
 }

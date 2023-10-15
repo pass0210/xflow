@@ -27,7 +27,7 @@ public class InitialProcessor extends InputOutputNode {
         waitMessage();
         Message requestMessage = getInputPort(0).get();
 
-        File file = new File("index.html");
+        File file = new File("www/index.html");
         try (BufferedReader fileReader = new BufferedReader(new FileReader(file))) {
           // index.html 파일 읽어 body 담기
           StringBuilder contents = new StringBuilder();
