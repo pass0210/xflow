@@ -1,9 +1,9 @@
-package com.nhnacademy.aiot.Message;
+package com.nhnacademy.aiot.message;
 
 import java.net.Socket;
 
-import com.nhnacademy.aiot.Header.Header;
-import com.nhnacademy.aiot.body.Body;
+import com.nhnacademy.aiot.message.header.Header;
+import com.nhnacademy.aiot.message.body.Body;
 
 public class ExceptionMessage extends Message {
     public ExceptionMessage(Header header, Body body, Socket socket) {

@@ -1,4 +1,4 @@
-package com.nhnacademy.aiot.body;
+package com.nhnacademy.aiot.message.body;
 
 public class Body {
     private String data;

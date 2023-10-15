@@ -5,19 +5,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nhnacademy.aiot.apiselection.GetAPISelection;
-import com.nhnacademy.aiot.filter.APIFilter;
-import com.nhnacademy.aiot.filter.FormatFilter;
-import com.nhnacademy.aiot.methodSelection.MethodSelection;
-import com.nhnacademy.aiot.processor.HumidityProcessor;
-import com.nhnacademy.aiot.processor.InitialProcessor;
-import com.nhnacademy.aiot.processor.JsProcessor;
-import com.nhnacademy.aiot.processor.TemperatureProcessor;
-import com.nhnacademy.aiot.response.HttpResponseNode;
-import com.nhnacademy.aiot.response.ResponseSender;
+import com.nhnacademy.aiot.node.selection.GetAPISelection;
+import com.nhnacademy.aiot.node.filter.APIFilter;
+import com.nhnacademy.aiot.node.filter.FormatFilter;
+import com.nhnacademy.aiot.node.selection.MethodSelection;
+import com.nhnacademy.aiot.node.processor.HumidityProcessor;
+import com.nhnacademy.aiot.node.processor.InitialProcessor;
+import com.nhnacademy.aiot.node.processor.JsProcessor;
+import com.nhnacademy.aiot.node.processor.TemperatureProcessor;
+import com.nhnacademy.aiot.node.response.HttpResponseNode;
+import com.nhnacademy.aiot.node.response.ResponseSender;
 
 public class Xflow {
-    private static Map<String, List<String>> apiMap = new HashMap<>();
+    private final static Map<String, List<String>> apiMap = new HashMap<>();
 
     public static void main(String[] args) {
         initAPIMap();
