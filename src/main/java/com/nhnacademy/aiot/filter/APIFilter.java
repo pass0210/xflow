@@ -33,7 +33,6 @@ public class APIFilter extends InputOutputNode {
                 boolean flag = apiChecker.check();
 
                 if (flag) {
-                    log.info("APIFileter = {}", message.getMessage());
                     output(0, message);
                 } else {
                     log.error("exception message error");
