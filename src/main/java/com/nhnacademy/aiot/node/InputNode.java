@@ -1,5 +1,6 @@
 package com.nhnacademy.aiot.node;
 
+import com.nhnacademy.aiot.message.Message;
 import com.nhnacademy.aiot.port.Port;
 
 public abstract class InputNode extends ActiveNode{
@@ -21,11 +22,13 @@ public abstract class InputNode extends ActiveNode{
         return inputPorts.length;
     }
 
-    protected void waitMessage() throws InterruptedException{
+    protected Message tryGetMessage() throws InterruptedException{
         synchronized (inputPorts[0]) {
             while (!inputPorts[0].hasMessage()) {
                 inputPorts[0].wait();
             }
+
+            return inputPorts[0].get();
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.nhnacademy.aiot.node.selection;
 
 import com.nhnacademy.aiot.message.Message;
+import com.nhnacademy.aiot.message.header.RequestHeader;
 import com.nhnacademy.aiot.node.InputOutputNode;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +17,7 @@ public class GetAPISelection extends InputOutputNode {
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                waitMessage();
-
-                Message message = getInputPort(0).get();
+                Message message = tryGetMessage();
                 String api = takeApi(message);
 
                 if (api.matches("/")) {
@@ -46,6 +45,7 @@ public class GetAPISelection extends InputOutputNode {
     }
 
     private String takeApi(Message message) {
-        return message.getHeader().getFristHeaderLine().split(" ")[1];
+        RequestHeader header = (RequestHeader) message.getHeader();
+        return header.getResource();
     }
 }

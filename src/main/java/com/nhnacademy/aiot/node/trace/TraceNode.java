@@ -14,9 +14,7 @@ public class TraceNode extends InputNode {
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                waitMessage();
-
-                Message message = getInputPort(0).get();
+                Message message = tryGetMessage();
 
                 log.error(message.getMessage());
             } catch (InterruptedException e) {

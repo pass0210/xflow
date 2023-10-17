@@ -25,8 +25,8 @@ public class APIFilter extends InputOutputNode {
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                waitMessage();
-                Message message = getInputPort(0).get();
+                Message message = tryGetMessage();
+
                 Header header = message.getHeader();
                 APIChecker apiChecker = new APIChecker(map, header);
 
