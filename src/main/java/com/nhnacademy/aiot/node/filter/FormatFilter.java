@@ -1,10 +1,14 @@
 package com.nhnacademy.aiot.node.filter;
 
+import com.nhnacademy.aiot.message.ExceptionMessage;
 import com.nhnacademy.aiot.message.RequestMessage;
-import com.nhnacademy.aiot.checker.FormatChecker;
-import com.nhnacademy.aiot.generator.RequestMessageGenerator;
+import com.nhnacademy.aiot.message.ResponseMessage;
 import com.nhnacademy.aiot.message.body.Body;
-import com.nhnacademy.aiot.message.header.RequestHeader;
+import com.nhnacademy.aiot.message.header.ResponseHeader;
+import com.nhnacademy.aiot.checker.FormatChecker;
+import com.nhnacademy.aiot.generator.HtmlGenerator;
+import com.nhnacademy.aiot.generator.RequestMessageGenerator;
+import com.nhnacademy.aiot.generator.ResponseMessageGenerator;
 import com.nhnacademy.aiot.node.OutputNode;
 import com.nhnacademy.aiot.splitter.RequestMessageSplitter;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +53,10 @@ public class FormatFilter extends OutputNode {
                         // 메시지 포맷 검사
                         FormatChecker formatChecker = new FormatChecker(headerString, bodyString);
 
+                        if (builder.toString().isEmpty()) {
+                            socket.close();
+                        }
+
                         // 0번 true, 1번 false
                         if (formatChecker.check()) {
                             // 메시지 생성
@@ -56,13 +64,30 @@ public class FormatFilter extends OutputNode {
                             RequestMessage requestMessage = messageGenerator.generateMessage(headerString, bodyString,
                                     socket);
 
-                            if (requestMessage == null) {
-                                log.error("null");
-                            }
-
                             output(0, requestMessage);
                         } else {
-                            socket.close();
+                            RequestMessageGenerator requestMessageGenerator = new RequestMessageGenerator();
+                            RequestMessage requestMessage = requestMessageGenerator.generateMessage(headerString,
+                                    bodyString,
+                                    socket);
+
+                            ExceptionMessage exceptionMessage = new ExceptionMessage(requestMessage.getHeader(),
+                                    new Body("Format Error"),
+                                    requestMessage.getSocket());
+
+                            String htmlData = HtmlGenerator.generate("404 Not Found");
+                            ResponseHeader responseHeader = new ResponseHeader("404", "Format Error");
+                            responseHeader.addHeader("Content-Type", "text/html; charset=utf-8");
+                            responseHeader.addHeader("Content-Length", String.valueOf(htmlData.length()));
+
+                            // Message 만들기
+                            ResponseMessageGenerator responseMessageGenerator = new ResponseMessageGenerator(
+                                    responseHeader,
+                                    new Body(htmlData));
+                            ResponseMessage responseMessage = responseMessageGenerator
+                                    .generate(requestMessage.getSocket());
+                            output(1, responseMessage);
+                            output(1, exceptionMessage);
                         }
                     } catch (IOException e) {
                         log.error(e.getMessage());
