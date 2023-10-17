@@ -22,20 +22,18 @@ public class GetAPISelection extends InputOutputNode {
 
                 if (api.matches("/")) {
                     output(0, message);
-                } else if (api.matches("/dev")) {
-                    output(1, message);
-                } else if (api.matches("\\/dev(\\/[a-zA-Z0-9|\\-]+)?")) {
-                    output(2, message);
-                } else if (api.matches("/ep")) {
-                    output(3, message);
-                } else if (api.matches("\\/ep\\/\\w+\\/[a-zA-Z0-9|\\\\-]+(\\?.+)?")) {
-                    output(4, message);
                 } else if (api.matches("\\/common\\.js")) {
-                    output(5, message);
+                    output(1, message);
                 } else if (api.matches("\\/temperature")) {
-                    output(6, message);
+                    output(2, message);
                 } else if (api.matches("\\/humidity")) {
-                    output(7, message);
+                    output(3, message);
+                } else if (api.matches("/dev")) {
+                    output(4, message);
+                } else if (api.matches("\\/dev(\\/[a-zA-Z0-9|\\-]+)?")) {
+                    output(5, message);
+                } else if (api.matches("\\/ep\\/\\w+\\/[a-zA-Z0-9|\\\\-]+(\\?.+)?")) {
+                    output(6, message);
                 }
             } catch (InterruptedException e) {
                 log.error(e.getMessage());

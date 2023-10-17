@@ -26,7 +26,7 @@ public class Xflow {
         APIFilter apiFilter = new APIFilter(1, 2, apiMap);
 
         MethodSelection methodSelection = new MethodSelection(1, 4);
-        GetAPISelection getAPISelection = new GetAPISelection(1, 8);
+        GetAPISelection getAPISelection = new GetAPISelection(1, 7);
 
         InitialProcessor initialProcessor = new InitialProcessor(1, 1);
         JsProcessor jsProcessor = new JsProcessor(1, 1);
@@ -41,9 +41,9 @@ public class Xflow {
 
         methodSelection.connect(0, getAPISelection.getInputPort(0));
         getAPISelection.connect(0, initialProcessor.getInputPort(0));
-        getAPISelection.connect(5, jsProcessor.getInputPort(0));
-        getAPISelection.connect(6, temperatureProcessor.getInputPort(0));
-        getAPISelection.connect(7, humidityProcessor.getInputPort(0));
+        getAPISelection.connect(1, jsProcessor.getInputPort(0));
+        getAPISelection.connect(2, temperatureProcessor.getInputPort(0));
+        getAPISelection.connect(3, humidityProcessor.getInputPort(0));
 
         initialProcessor.connect(0, httpResponseNode.getInputPort(0));
         jsProcessor.connect(0, httpResponseNode.getInputPort(0));
@@ -73,7 +73,6 @@ public class Xflow {
         resourceList.add("/");
         resourceList.add("/dev");
         resourceList.add("\\/dev(\\/[a-zA-Z0-9|\\-]+)?");
-        resourceList.add("/ep");
         resourceList.add("\\/ep\\/\\w+\\/[a-zA-Z0-9|\\\\-]+(\\?.+)?");
         resourceList.add("\\/common\\.js");
         resourceList.add("\\/temperature");
