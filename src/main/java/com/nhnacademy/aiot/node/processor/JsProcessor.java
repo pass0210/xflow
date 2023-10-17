@@ -24,9 +24,7 @@ public class JsProcessor extends InputOutputNode {
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                waitMessage();
-
-                Message requestMessage = getInputPort(0).get();
+                Message requestMessage = tryGetMessage();
 
                 File file = new File("www/common.js");
                 try (FileReader reader = new FileReader(file)) {
@@ -40,7 +38,7 @@ public class JsProcessor extends InputOutputNode {
                     // Header 만들기
                     ResponseHeader header = new ResponseHeader("200", "OK");
                     header.addHeader("Content-Type", "application/javascript; charset=UTF-8");
-                    header.addHeader("Content-Length", String.valueOf(contents.length()));
+                    header.addHeader("Content-Length", String.valueOf(file.length()));
 
                     // Message 만들기
                     ResponseMessageGenerator messageGenerator = new ResponseMessageGenerator(header, body);

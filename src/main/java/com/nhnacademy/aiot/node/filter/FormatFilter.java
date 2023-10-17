@@ -3,6 +3,8 @@ package com.nhnacademy.aiot.node.filter;
 import com.nhnacademy.aiot.message.RequestMessage;
 import com.nhnacademy.aiot.checker.FormatChecker;
 import com.nhnacademy.aiot.generator.RequestMessageGenerator;
+import com.nhnacademy.aiot.message.body.Body;
+import com.nhnacademy.aiot.message.header.RequestHeader;
 import com.nhnacademy.aiot.node.OutputNode;
 import com.nhnacademy.aiot.splitter.RequestMessageSplitter;
 import lombok.extern.slf4j.Slf4j;
@@ -54,11 +56,18 @@ public class FormatFilter extends OutputNode {
                             RequestMessage requestMessage = messageGenerator.generateMessage(headerString, bodyString,
                                     socket);
 
+                            if (requestMessage == null) {
+                                log.error("null");
+                            }
+
                             output(0, requestMessage);
                         } else {
                             socket.close();
                         }
                     } catch (IOException e) {
+                        log.error(e.getMessage());
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
                         log.error(e.getMessage());
                     }
                 }).start();

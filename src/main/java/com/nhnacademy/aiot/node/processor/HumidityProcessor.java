@@ -9,6 +9,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import com.nhnacademy.aiot.message.Message;
 import org.json.JSONObject;
 
 import com.nhnacademy.aiot.message.header.ResponseHeader;
@@ -31,9 +32,8 @@ public class HumidityProcessor extends InputOutputNode {
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                waitMessage();
-
-                Socket socket = getInputPort(0).get().getSocket();
+                Message message = tryGetMessage();
+                Socket socket = message.getSocket();
 
                 try {
                     // URL 객체를 생성

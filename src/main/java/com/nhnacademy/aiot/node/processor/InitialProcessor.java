@@ -24,8 +24,7 @@ public class InitialProcessor extends InputOutputNode {
   public void run() {
     while (!Thread.currentThread().isInterrupted()) {
       try {
-        waitMessage();
-        Message requestMessage = getInputPort(0).get();
+        Message requestMessage = tryGetMessage();
 
         File file = new File("www/index.html");
         try (BufferedReader fileReader = new BufferedReader(new FileReader(file))) {
@@ -39,7 +38,7 @@ public class InitialProcessor extends InputOutputNode {
           // Header 만들기
           ResponseHeader header = new ResponseHeader("200", "OK");
           header.addHeader("Content-Type", "text/html; charset=utf-8");
-          header.addHeader("Content-Length", String.valueOf(body.getData().length()));
+          header.addHeader("Content-Length", String.valueOf(file.length()));
 
           // Message 만들기
           ResponseMessageGenerator messageGenerator = new ResponseMessageGenerator(header, body);

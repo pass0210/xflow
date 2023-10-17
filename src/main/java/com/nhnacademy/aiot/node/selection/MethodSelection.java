@@ -1,6 +1,7 @@
 package com.nhnacademy.aiot.node.selection;
 
 import com.nhnacademy.aiot.message.Message;
+import com.nhnacademy.aiot.message.header.RequestHeader;
 import com.nhnacademy.aiot.node.InputOutputNode;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +17,7 @@ public class MethodSelection extends InputOutputNode {
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                waitMessage();
-                Message message = getInputPort(0).get();
+                Message message = tryGetMessage();
                 String method = takeMethod(message);
 
                 if (method.equalsIgnoreCase("GET")) {
@@ -38,6 +38,7 @@ public class MethodSelection extends InputOutputNode {
     }
 
     private String takeMethod(Message message) {
-        return message.getHeader().getFristHeaderLine().split(" ")[0];
+        RequestHeader header = (RequestHeader) message.getHeader();
+        return header.getMethod();
     }
 }
