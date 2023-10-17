@@ -55,6 +55,7 @@ public class FormatFilter extends OutputNode {
 
                         if (builder.toString().isEmpty()) {
                             socket.close();
+                            return;
                         }
 
                         // 0번 true, 1번 false
