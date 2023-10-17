@@ -66,6 +66,9 @@ public class FormatFilter extends OutputNode {
                         }
                     } catch (IOException e) {
                         log.error(e.getMessage());
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        log.error(e.getMessage());
                     }
                 }).start();
 

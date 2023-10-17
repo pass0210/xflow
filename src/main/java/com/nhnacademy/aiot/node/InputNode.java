@@ -23,12 +23,6 @@ public abstract class InputNode extends ActiveNode{
     }
 
     protected Message tryGetMessage() throws InterruptedException{
-        synchronized (inputPorts[0]) {
-            while (!inputPorts[0].hasMessage()) {
-                inputPorts[0].wait();
-            }
-
             return inputPorts[0].get();
-        }
     }
 }
