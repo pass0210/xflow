@@ -9,6 +9,7 @@ import com.nhnacademy.aiot.node.selection.GetAPISelection;
 import com.nhnacademy.aiot.node.filter.APIFilter;
 import com.nhnacademy.aiot.node.filter.FormatFilter;
 import com.nhnacademy.aiot.node.selection.MethodSelection;
+import com.nhnacademy.aiot.node.trace.TraceNode;
 import com.nhnacademy.aiot.node.processor.HumidityProcessor;
 import com.nhnacademy.aiot.node.processor.InitialProcessor;
 import com.nhnacademy.aiot.node.processor.JsProcessor;
@@ -25,7 +26,7 @@ public class Xflow {
         FormatFilter formatFilter = new FormatFilter(2);
         APIFilter apiFilter = new APIFilter(1, 2, apiMap);
 
-        MethodSelection methodSelection = new MethodSelection(1, 4);
+        MethodSelection methodSelection = new MethodSelection(1, 5);
         GetAPISelection getAPISelection = new GetAPISelection(1, 7);
 
         InitialProcessor initialProcessor = new InitialProcessor(1, 1);
@@ -36,8 +37,12 @@ public class Xflow {
         HttpResponseNode httpResponseNode = new HttpResponseNode(1, 2);
         ResponseSender responseSender = new ResponseSender(1);
 
+        TraceNode traceNode = new TraceNode(1);
+
         formatFilter.connect(0, apiFilter.getInputPort(0));
+        formatFilter.connect(1, httpResponseNode.getInputPort(0));
         apiFilter.connect(0, methodSelection.getInputPort(0));
+        apiFilter.connect(1, httpResponseNode.getInputPort(0));
 
         methodSelection.connect(0, getAPISelection.getInputPort(0));
         getAPISelection.connect(0, initialProcessor.getInputPort(0));
@@ -51,6 +56,7 @@ public class Xflow {
         humidityProcessor.connect(0, httpResponseNode.getInputPort(0));
 
         httpResponseNode.connect(0, responseSender.getInputPort(0));
+        httpResponseNode.connect(1, traceNode.getInputPort(0));
 
         formatFilter.start();
         apiFilter.start();
@@ -65,6 +71,7 @@ public class Xflow {
 
         httpResponseNode.start();
         responseSender.start();
+        traceNode.start();
     }
 
     private static void initAPIMap() {
