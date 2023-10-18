@@ -12,8 +12,4 @@ public abstract class Node {
     protected Node() {
         id = String.format("%s-%02d", getClass().getSimpleName(), count.incrementAndGet());
     }
-
-    public String getCount() {
-        return id;
-    }
 }

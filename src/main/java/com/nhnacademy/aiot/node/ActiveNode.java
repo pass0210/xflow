@@ -1,6 +1,6 @@
 package com.nhnacademy.aiot.node;
 
-public abstract class ActiveNode implements Runnable{
+public abstract class ActiveNode extends Node implements Runnable{
     private final Thread thread;
 
     protected ActiveNode() {
@@ -9,9 +9,5 @@ public abstract class ActiveNode implements Runnable{
 
     public void start() {
         thread.start();
-    }
-
-    public void stop() {
-        thread.interrupt();
     }
 }
