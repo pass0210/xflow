@@ -1,6 +1,8 @@
 package com.nhnacademy.aiot.node.processor;
 
+import com.nhnacademy.aiot.generator.HtmlGenerator;
 import com.nhnacademy.aiot.generator.ResponseMessageGenerator;
+import com.nhnacademy.aiot.message.ExceptionMessage;
 import com.nhnacademy.aiot.message.Message;
 import com.nhnacademy.aiot.message.ResponseMessage;
 import com.nhnacademy.aiot.message.body.Body;
@@ -8,6 +10,7 @@ import com.nhnacademy.aiot.message.header.RequestHeader;
 import com.nhnacademy.aiot.message.header.ResponseHeader;
 import com.nhnacademy.aiot.node.InputOutputNode;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -31,7 +34,8 @@ public class DeviceIdInfoProcessor extends InputOutputNode {
             try {
                 Message message = tryGetMessage();
                 Socket socket = message.getSocket();
-                String resource = ((RequestHeader) message.getHeader()).getResource();
+                RequestHeader requestHeader = (RequestHeader) message.getHeader();
+                String resource = requestHeader.getResource();
 
                 try {
                     // URL 객체 생성
@@ -63,12 +67,12 @@ public class DeviceIdInfoProcessor extends InputOutputNode {
                         Body body = new Body(result.toString());
 
                         // 헤더 생성
-                        ResponseHeader header = new ResponseHeader("200", "OK");
-                        header.addHeader("Content-Type", "application/json; charset=UTF-8");
-                        header.addHeader("Content-Length", String.valueOf(body.getData().length()));
+                        ResponseHeader responseHeader = new ResponseHeader("200", "OK");
+                        requestHeader.addHeader("Content-Type", "application/json; charset=UTF-8");
+                        requestHeader.addHeader("Content-Length", String.valueOf(body.getData().length()));
 
                         // 메시지 생성
-                        ResponseMessageGenerator messageGenerator = new ResponseMessageGenerator(header, body);
+                        ResponseMessageGenerator messageGenerator = new ResponseMessageGenerator(responseHeader, body);
                         ResponseMessage responseMessage = messageGenerator.generate(socket);
 
                         // output
@@ -78,6 +82,21 @@ public class DeviceIdInfoProcessor extends InputOutputNode {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                } catch (JSONException e) {
+                    ExceptionMessage exceptionMessage = new ExceptionMessage(requestHeader, new Body("Not Found Device"),
+                            message.getSocket());
+
+                    String htmlData = HtmlGenerator.generate("404 Not Found");
+                    ResponseHeader responseHeader = new ResponseHeader("404", "Not Found");
+                    responseHeader.addHeader("Content-Type", "text/html; charset=utf-8");
+                    responseHeader.addHeader("Content-Length", String.valueOf(htmlData.length()));
+
+                    // Message 만들기
+                    ResponseMessageGenerator messageGenerator = new ResponseMessageGenerator(responseHeader,
+                            new Body(htmlData));
+                    ResponseMessage responseMessage = messageGenerator.generate(message.getSocket());
+                    output(0, responseMessage);
+                    output(0, exceptionMessage);
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
