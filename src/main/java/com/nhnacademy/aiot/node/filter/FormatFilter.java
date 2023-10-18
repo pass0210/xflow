@@ -33,11 +33,8 @@ public class FormatFilter extends OutputNode {
             while (!Thread.currentThread().isInterrupted()) {
                 Socket socket = serverSocket.accept();
                 new Thread(() -> {
-                    try {
-
+                    try (BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))){
                         StringBuilder builder = new StringBuilder();
-
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
                         // socket 메시지 전체 읽어서 저장
                         while (reader.ready()) {
