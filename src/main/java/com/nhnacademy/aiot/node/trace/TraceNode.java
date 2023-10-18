@@ -16,13 +16,12 @@ public class TraceNode extends InputNode {
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                Message message = tryGetMessage();
-                ExceptionMessage exceptionMessage = (ExceptionMessage) message;
+                ExceptionMessage message = (ExceptionMessage) tryGetMessage();
 
-                String ip = exceptionMessage.getSocket().getInetAddress().toString();
-                String method = ((RequestHeader) exceptionMessage.getHeader()).getMethod();
-                String resource = ((RequestHeader) exceptionMessage.getHeader()).getResource();
-                String exceptionString = exceptionMessage.getMessage();
+                String ip = message.getSocket().getInetAddress().toString();
+                String method = ((RequestHeader) message.getHeader()).getMethod();
+                String resource = ((RequestHeader) message.getHeader()).getResource();
+                String exceptionString = message.getMessage();
 
                 log.error("[{}] [{} {}] [{}]", ip, method, resource, exceptionString);
             } catch (InterruptedException e) {

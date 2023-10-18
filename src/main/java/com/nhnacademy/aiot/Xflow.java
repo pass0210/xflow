@@ -18,13 +18,14 @@ import com.nhnacademy.aiot.node.response.HttpResponseNode;
 import com.nhnacademy.aiot.node.response.ResponseSender;
 
 public class Xflow {
-    private final static Map<String, List<String>> apiMap = new HashMap<>();
+    private static final Map<String, List<String>> API_MAP = new HashMap<>();
 
     public static void main(String[] args) {
         initAPIMap();
 
+        // node init
         FormatFilter formatFilter = new FormatFilter(2);
-        APIFilter apiFilter = new APIFilter(1, 2, apiMap);
+        APIFilter apiFilter = new APIFilter(1, 2, API_MAP);
 
         MethodSelection methodSelection = new MethodSelection(1, 5);
         GetAPISelection getAPISelection = new GetAPISelection(1, 7);
@@ -39,6 +40,8 @@ public class Xflow {
 
         TraceNode traceNode = new TraceNode(1);
 
+
+        // node connection
         formatFilter.connect(0, apiFilter.getInputPort(0));
         formatFilter.connect(1, httpResponseNode.getInputPort(0));
         apiFilter.connect(0, methodSelection.getInputPort(0));
@@ -58,6 +61,8 @@ public class Xflow {
         httpResponseNode.connect(0, responseSender.getInputPort(0));
         httpResponseNode.connect(1, traceNode.getInputPort(0));
 
+
+        // node start
         formatFilter.start();
         apiFilter.start();
 
@@ -78,13 +83,13 @@ public class Xflow {
         List<String> resourceList = new ArrayList<>();
 
         resourceList.add("/");
-        resourceList.add("/dev");
-        resourceList.add("\\/dev(\\/[a-zA-Z0-9|\\-]+)?");
-        resourceList.add("\\/ep\\/\\w+\\/[a-zA-Z0-9|\\\\-]+(\\?.+)?");
         resourceList.add("\\/common\\.js");
         resourceList.add("\\/temperature");
         resourceList.add("\\/humidity");
+        resourceList.add("/dev");
+        resourceList.add("\\/dev(\\/[a-zA-Z0-9|\\-]+)?");
+        resourceList.add("\\/ep\\/\\w+\\/[a-zA-Z0-9|\\\\-]+(\\?.+)?");
 
-        apiMap.put("GET", resourceList);
+        API_MAP.put("GET", resourceList);
     }
 }

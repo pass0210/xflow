@@ -32,12 +32,12 @@ public class FormatFilter extends OutputNode {
 
             while (!Thread.currentThread().isInterrupted()) {
                 Socket socket = serverSocket.accept();
+                // TODO
+                // 쓰레드 따로 클래스로 뺄지 FormatFilter 멀티스레드 환경 구축할지 결정
+
                 new Thread(() -> {
-                    try {
-
+                    try (BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))){
                         StringBuilder builder = new StringBuilder();
-
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
                         // socket 메시지 전체 읽어서 저장
                         while (reader.ready()) {
