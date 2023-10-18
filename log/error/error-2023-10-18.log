@@ -1,0 +1,18 @@
+2023-10-18 10:49:25.857 ERROR 5822 --- [ Thread-9 ] c.n.a.node.response.ResponseSender - Socket is closed
+2023-10-18 10:49:26.856 ERROR 6821 --- [ Thread-9 ] c.n.a.node.response.ResponseSender - Socket is closed
+2023-10-18 10:49:31.892 ERROR 11857 --- [ Thread-9 ] c.n.a.node.response.ResponseSender - Socket is closed
+2023-10-18 10:51:43.288 ERROR 3096 --- [ Thread-9 ] c.n.a.node.response.ResponseSender - Socket is closed
+2023-10-18 10:51:44.285 ERROR 4093 --- [ Thread-9 ] c.n.a.node.response.ResponseSender - Socket is closed
+2023-10-18 10:52:38.797 ERROR 2566 --- [ Thread-9 ] c.n.a.node.response.ResponseSender - Socket is closed
+2023-10-18 10:52:39.816 ERROR 3585 --- [ Thread-9 ] c.n.a.node.response.ResponseSender - Socket is closed
+2023-10-18 10:52:44.839 ERROR 8608 --- [ Thread-9 ] c.n.a.node.response.ResponseSender - Socket is closed
+2023-10-18 10:52:46.031 ERROR 9800 --- [ Thread-9 ] c.n.a.node.response.ResponseSender - Socket is closed
+2023-10-18 10:52:47.075 ERROR 10844 --- [ Thread-9 ] c.n.a.node.response.ResponseSender - Socket is closed
+2023-10-18 10:53:20.846 ERROR 2420 --- [ Thread-10 ] c.n.aiot.node.trace.TraceNode - [/127.0.0.1] [PATCH /] [Format Error]
+2023-10-18 10:53:20.846 ERROR 2420 --- [ Thread-9 ] c.n.a.node.response.ResponseSender - Socket is closed
+2023-10-18 10:53:30.209 ERROR 11783 --- [ Thread-9 ] c.n.a.node.response.ResponseSender - Socket is closed
+2023-10-18 10:53:40.926 ERROR 22500 --- [ Thread-9 ] c.n.a.node.response.ResponseSender - Socket is closed
+2023-10-18 10:54:24.102 ERROR 2706 --- [ Thread-9 ] c.n.a.node.response.ResponseSender - Socket is closed
+2023-10-18 10:54:29.992 ERROR 8596 --- [ Thread-9 ] c.n.a.node.response.ResponseSender - Socket is closed
+2023-10-18 10:59:35.371 ERROR 3683 --- [ Thread-9 ] c.n.a.node.response.ResponseSender - Socket is closed
+2023-10-18 10:59:36.387 ERROR 4699 --- [ Thread-9 ] c.n.a.node.response.ResponseSender - Socket is closed
