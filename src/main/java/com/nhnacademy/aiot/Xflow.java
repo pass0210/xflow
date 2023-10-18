@@ -40,7 +40,6 @@ public class Xflow {
 
         TraceNode traceNode = new TraceNode(1);
 
-
         // node connection
         formatFilter.connect(0, apiFilter.getInputPort(0));
         formatFilter.connect(1, httpResponseNode.getInputPort(0));
@@ -60,7 +59,6 @@ public class Xflow {
 
         httpResponseNode.connect(0, responseSender.getInputPort(0));
         httpResponseNode.connect(1, traceNode.getInputPort(0));
-
 
         // node start
         formatFilter.start();
@@ -88,7 +86,7 @@ public class Xflow {
         resourceList.add("\\/humidity");
         resourceList.add("/dev");
         resourceList.add("\\/dev(\\/[a-zA-Z0-9|\\-]+)?");
-        resourceList.add("\\/ep\\/\\w+\\/[a-zA-Z0-9|\\\\-]+(\\?.+)?");
+        resourceList.add("\\/ep\\/\\w+\\/[a-zA-Z0-9|\\\\-]+(\\?(.+=.+))?");
 
         API_MAP.put("GET", resourceList);
     }
