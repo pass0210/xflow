@@ -14,10 +14,7 @@ public abstract class OutputNode extends ActiveNode{
         outputPorts[index] = inputPort;
     }
 
-    protected void output(int index, Message message) {
-        synchronized (outputPorts[index]) {
+    protected void output(int index, Message message) throws InterruptedException{
             outputPorts[index].put(message);
-            outputPorts[index].notifyAll();
-        }
     }
 }

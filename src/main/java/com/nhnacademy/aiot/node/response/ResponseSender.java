@@ -20,9 +20,7 @@ public class ResponseSender extends InputNode {
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                waitMessage();
-
-                Message message = getInputPort(0).get();
+                Message message = tryGetMessage();
 
                 Socket socket = message.getSocket();
 

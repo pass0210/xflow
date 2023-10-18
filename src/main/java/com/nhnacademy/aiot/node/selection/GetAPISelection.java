@@ -1,6 +1,7 @@
 package com.nhnacademy.aiot.node.selection;
 
 import com.nhnacademy.aiot.message.Message;
+import com.nhnacademy.aiot.message.header.RequestHeader;
 import com.nhnacademy.aiot.node.InputOutputNode;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,27 +17,23 @@ public class GetAPISelection extends InputOutputNode {
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                waitMessage();
-
-                Message message = getInputPort(0).get();
+                Message message = tryGetMessage();
                 String api = takeApi(message);
 
                 if (api.matches("/")) {
                     output(0, message);
-                } else if (api.matches("/dev")) {
-                    output(1, message);
-                } else if (api.matches("\\/dev(\\/[a-zA-Z0-9|\\-]+)?")) {
-                    output(2, message);
-                } else if (api.matches("/ep")) {
-                    output(3, message);
-                } else if (api.matches("\\/ep\\/\\w+\\/[a-zA-Z0-9|\\\\-]+(\\?.+)?")) {
-                    output(4, message);
                 } else if (api.matches("\\/common\\.js")) {
-                    output(5, message);
+                    output(1, message);
                 } else if (api.matches("\\/temperature")) {
-                    output(6, message);
+                    output(2, message);
                 } else if (api.matches("\\/humidity")) {
-                    output(7, message);
+                    output(3, message);
+                } else if (api.matches("/dev")) {
+                    output(4, message);
+                } else if (api.matches("\\/dev(\\/[a-zA-Z0-9|\\-]+)?")) {
+                    output(5, message);
+                } else if (api.matches("\\/ep\\/\\w+\\/[a-zA-Z0-9|\\\\-]+(\\?.+)?")) {
+                    output(6, message);
                 }
             } catch (InterruptedException e) {
                 log.error(e.getMessage());
@@ -46,6 +43,7 @@ public class GetAPISelection extends InputOutputNode {
     }
 
     private String takeApi(Message message) {
-        return message.getHeader().getFristHeaderLine().split(" ")[1];
+        RequestHeader header = (RequestHeader) message.getHeader();
+        return header.getResource();
     }
 }

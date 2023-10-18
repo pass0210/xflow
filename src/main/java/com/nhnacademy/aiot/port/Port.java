@@ -2,28 +2,23 @@ package com.nhnacademy.aiot.port;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
 import com.nhnacademy.aiot.message.Message;
 
 public class Port {
-    Queue<Message> messageQueue;
+    BlockingQueue<Message> messageQueue;
 
     public Port() {
-        messageQueue = new LinkedList<>();
+        messageQueue = new LinkedBlockingQueue<>();
     }
 
-    public void put(Message message) {
-        messageQueue.add(message);
+    public void put(Message message) throws InterruptedException{
+        messageQueue.put(message);
     }
 
-    public boolean hasMessage() {
-        return !messageQueue.isEmpty();
-    }
-
-    public Message get() {
-        return messageQueue.poll();
-    }
-
-    public void remove() {
-        messageQueue.remove();
+    public Message get() throws InterruptedException {
+        return messageQueue.take();
     }
 }

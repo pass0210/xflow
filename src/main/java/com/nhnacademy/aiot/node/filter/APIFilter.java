@@ -2,18 +2,20 @@ package com.nhnacademy.aiot.node.filter;
 
 import java.util.List;
 import java.util.Map;
-import com.nhnacademy.aiot.message.header.Header;
+import com.nhnacademy.aiot.message.header.RequestHeader;
+import com.nhnacademy.aiot.message.header.ResponseHeader;
+import com.nhnacademy.aiot.message.ExceptionMessage;
 import com.nhnacademy.aiot.message.Message;
+import com.nhnacademy.aiot.message.ResponseMessage;
+import com.nhnacademy.aiot.message.body.Body;
 import com.nhnacademy.aiot.node.InputOutputNode;
 import lombok.extern.slf4j.Slf4j;
 import com.nhnacademy.aiot.checker.APIChecker;
+import com.nhnacademy.aiot.generator.HtmlGenerator;
+import com.nhnacademy.aiot.generator.ResponseMessageGenerator;
 
 @Slf4j
 public class APIFilter extends InputOutputNode {
-    // TODO
-    // run()문 안에 추가
-    // private ResponseMessageGenerator responseMessageGenerator;
-
     private final Map<String, List<String>> map;
 
     public APIFilter(int inputCount, int outputCount, Map<String, List<String>> map) {
@@ -25,9 +27,9 @@ public class APIFilter extends InputOutputNode {
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                waitMessage();
-                Message message = getInputPort(0).get();
-                Header header = message.getHeader();
+                Message message = tryGetMessage();
+
+                RequestHeader header = (RequestHeader) message.getHeader();
                 APIChecker apiChecker = new APIChecker(map, header);
 
                 boolean flag = apiChecker.check();
@@ -35,7 +37,20 @@ public class APIFilter extends InputOutputNode {
                 if (flag) {
                     output(0, message);
                 } else {
-                    log.error("exception message error");
+                    ExceptionMessage exceptionMessage = new ExceptionMessage(header, new Body("Not Found"),
+                            message.getSocket());
+
+                    String htmlData = HtmlGenerator.generate("404 Not Found");
+                    ResponseHeader responseHeader = new ResponseHeader("404", "Not Found");
+                    responseHeader.addHeader("Content-Type", "text/html; charset=utf-8");
+                    responseHeader.addHeader("Content-Length", String.valueOf(htmlData.length()));
+
+                    // Message 만들기
+                    ResponseMessageGenerator messageGenerator = new ResponseMessageGenerator(responseHeader,
+                            new Body(htmlData));
+                    ResponseMessage responseMessage = messageGenerator.generate(message.getSocket());
+                    output(1, responseMessage);
+                    output(1, exceptionMessage);
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();

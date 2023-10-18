@@ -16,9 +16,7 @@ public class HttpResponseNode extends InputOutputNode {
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                waitMessage();
-
-                Message message = getInputPort(0).get();
+                Message message = tryGetMessage();
 
                 if (message instanceof ResponseMessage) {
                     output(0, message);
