@@ -58,11 +58,8 @@ public class SensorTypeInfoProcessor extends InputOutputNode {
                         }
                         reader.close();
 
-                        // 응답 출력
-                        JSONObject jsonObject = new JSONObject(response.toString());
-
                         // 바디 생성
-                        Body body = new Body(jsonObject.toString());
+                        Body body = new Body(response.toString());
 
                         // 헤더 생성
                         ResponseHeader header = new ResponseHeader("200", "OK");
