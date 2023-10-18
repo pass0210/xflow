@@ -10,9 +10,12 @@ import com.nhnacademy.aiot.node.filter.APIFilter;
 import com.nhnacademy.aiot.node.filter.FormatFilter;
 import com.nhnacademy.aiot.node.selection.MethodSelection;
 import com.nhnacademy.aiot.node.trace.TraceNode;
+import com.nhnacademy.aiot.node.processor.DeviceAllInfoProcessor;
+import com.nhnacademy.aiot.node.processor.DeviceIdInfoProcessor;
 import com.nhnacademy.aiot.node.processor.HumidityProcessor;
 import com.nhnacademy.aiot.node.processor.InitialProcessor;
 import com.nhnacademy.aiot.node.processor.JsProcessor;
+import com.nhnacademy.aiot.node.processor.SensorTypeInfoProcessor;
 import com.nhnacademy.aiot.node.processor.TemperatureProcessor;
 import com.nhnacademy.aiot.node.response.HttpResponseNode;
 import com.nhnacademy.aiot.node.response.ResponseSender;
@@ -34,6 +37,9 @@ public class Xflow {
         JsProcessor jsProcessor = new JsProcessor(1, 1);
         TemperatureProcessor temperatureProcessor = new TemperatureProcessor(1, 1);
         HumidityProcessor humidityProcessor = new HumidityProcessor(1, 1);
+        DeviceAllInfoProcessor deviceAllInfoProcessor = new DeviceAllInfoProcessor(1, 1);
+        DeviceIdInfoProcessor deviceIdInfoProcessor = new DeviceIdInfoProcessor(1, 1);
+        SensorTypeInfoProcessor sensorTypeInfoProcessor = new SensorTypeInfoProcessor(1, 1);
 
         HttpResponseNode httpResponseNode = new HttpResponseNode(1, 2);
         ResponseSender responseSender = new ResponseSender(1);
@@ -51,11 +57,17 @@ public class Xflow {
         getAPISelection.connect(1, jsProcessor.getInputPort(0));
         getAPISelection.connect(2, temperatureProcessor.getInputPort(0));
         getAPISelection.connect(3, humidityProcessor.getInputPort(0));
+        getAPISelection.connect(4, deviceAllInfoProcessor.getInputPort(0));
+        getAPISelection.connect(5, deviceIdInfoProcessor.getInputPort(0));
+        getAPISelection.connect(6, sensorTypeInfoProcessor.getInputPort(0));
 
         initialProcessor.connect(0, httpResponseNode.getInputPort(0));
         jsProcessor.connect(0, httpResponseNode.getInputPort(0));
         temperatureProcessor.connect(0, httpResponseNode.getInputPort(0));
         humidityProcessor.connect(0, httpResponseNode.getInputPort(0));
+        deviceAllInfoProcessor.connect(0, httpResponseNode.getInputPort(0));
+        deviceIdInfoProcessor.connect(0, httpResponseNode.getInputPort(0));
+        sensorTypeInfoProcessor.connect(0, httpResponseNode.getInputPort(0));
 
         httpResponseNode.connect(0, responseSender.getInputPort(0));
         httpResponseNode.connect(1, traceNode.getInputPort(0));
@@ -71,6 +83,9 @@ public class Xflow {
         jsProcessor.start();
         temperatureProcessor.start();
         humidityProcessor.start();
+        deviceAllInfoProcessor.start();
+        deviceIdInfoProcessor.start();
+        sensorTypeInfoProcessor.start();
 
         httpResponseNode.start();
         responseSender.start();
