@@ -1,33 +1,33 @@
 const emsapi = function () {
     'use strict';
-    const api = new Object();
+    const api = {}
     let testMode = false;
 
     const SERVER_URL = 'http://localhost:3000';
     const JSON_FORMAT = 'json';
 
     api.getTemperature = async function (startDt, endDt, unit) {
-        startDt = startDt == undefined ? '' : startDt.trim();
-        endDt = endDt == undefined ? '' : endDt.trim();
-        unit = unit == undefined ? '' : unit.trim();
+        startDt = startDt === undefined ? '' : startDt.trim();
+        endDt = endDt === undefined ? '' : endDt.trim();
+        unit = unit === undefined ? '' : unit.trim();
 
         if (testMode) {
-            if (startDt == '' && endDt == '' && unit == '') {
+            if (startDt === '' && endDt === '' && unit === '') {
                 return getTestTemperatureByRealTime();
             }
         }
 
         let url = SERVER_URL + '/temperature';
 
-        if (startDt != '') {
+        if (startDt !== '') {
             url += '&startDt=' + startDt;
         }
 
-        if (endDt != '') {
+        if (endDt !== '') {
             url += '&endDt=' + endDt;
         }
 
-        if (unit != '') {
+        if (unit !== '') {
             url += '&unit=' + unit;
         }
 
@@ -41,27 +41,27 @@ const emsapi = function () {
     };
 
     api.getHumidity = async function (startDt, endDt, unit) {
-        startDt = startDt == undefined ? '' : startDt.trim();
-        endDt = endDt == undefined ? '' : endDt.trim();
-        unit = unit == undefined ? '' : unit.trim();
+        startDt = startDt === undefined ? '' : startDt.trim();
+        endDt = endDt === undefined ? '' : endDt.trim();
+        unit = unit === undefined ? '' : unit.trim();
 
         if (testMode) {
-            if (startDt == '' && endDt == '' && unit == '') {
+            if (startDt === '' && endDt === '' && unit === '') {
                 return getTestHumiditybyRealTime();
             }
         }
 
         let url = SERVER_URL + '/humidity';
 
-        if (startDt != '') {
+        if (startDt !== '') {
             url += '&startDt=' + startDt;
         }
 
-        if (endDt != '') {
+        if (endDt !== '') {
             url += '&endDt=' + endDt;
         }
 
-        if (unit != '') {
+        if (unit !== '') {
             url += '&unit=' + unit;
         }
 
@@ -75,14 +75,14 @@ const emsapi = function () {
     };
 
     function getTestTemperatureByRealTime() {
-        const result = new Object();
+        const result = {}
         result.dateTime = getTimestamp();
         result.temperature = getRandomInt(20, 50);
         return result;
     }
 
     function getTestHumiditybyRealTime() {
-        const result = new Object();
+        const result = {}
         result.dateTime = getTimestamp();
         result.humidity = getRandomInt(50, 100);
         return result;

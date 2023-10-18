@@ -32,7 +32,7 @@ public class GetAPISelection extends InputOutputNode {
                     output(4, message);
                 } else if (api.matches("\\/dev(\\/[a-zA-Z0-9|\\-]+)?")) {
                     output(5, message);
-                } else if (api.matches("\\/ep\\/\\w+\\/[a-zA-Z0-9|\\\\-]+(\\?.+)?")) {
+                } else if (api.matches("\\/ep\\/\\w+\\/[a-zA-Z0-9|\\\\-]+(\\?.+=.+)?")) {
                     output(6, message);
                 }
             } catch (InterruptedException e) {
