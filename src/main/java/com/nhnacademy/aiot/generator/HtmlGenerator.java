@@ -2,6 +2,11 @@ package com.nhnacademy.aiot.generator;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
 @Slf4j
 public class HtmlGenerator {
 
@@ -9,21 +14,19 @@ public class HtmlGenerator {
     }
 
     public static String generate(String message) {
-        log.info("Exception Html 생성 접근");
+        File file = new File("www/exception.html");
 
-        return "<!DOCTYPE html>" +
-                "<html lang=\"ko\">" +
-                "<head>" +
-                "<script src=\"https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/js/tabler.min.js\" defer></script>"
-                +
-                "<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler.min.css\">"
-                +
-                "<link rel=\"icon\" href=\"data:,\">" +
-                "<script type=\"text/javascript\" src=\"https://www.gstatic.com/charts/loader.js\"></script>" +
-                "</head>" +
-                "<body>" +
-                message +
-                "</body>" +
-                "</html>";
+        StringBuilder contents = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+
+            while (reader.ready()) {
+                contents.append(reader.readLine());
+            }
+
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+
+        return contents.toString().replaceAll("\\{MESSAGE\\}", message);
     }
 }
