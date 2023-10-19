@@ -26,7 +26,7 @@ public class JsProcessor extends InputOutputNode {
                 Message requestMessage = tryGetMessage();
                 log.info("[Client {}]: 메시지를 받음", requestMessage.getHeader().getId());
 
-                File file = new File("www/common.js");
+                File file = new File(getClass().getClassLoader().getResource("www/common.js").getFile());
                 try (FileReader reader = new FileReader(file)) {
                     // index.html 파일 읽어 body 담기
                     StringBuilder contents = new StringBuilder();

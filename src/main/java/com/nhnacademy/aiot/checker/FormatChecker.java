@@ -26,11 +26,11 @@ public class FormatChecker implements Checker {
     }
 
     private boolean methodCheck(String method) {
-        return method.matches("^(?!GET$|POST$|DELETE$|PUT$).*");
+        return !method.matches("^(?!GET$|POST$|DELETE$|PUT$).*");
     }
 
     private boolean versionCheck(String version) {
-        return !version.equals("HTTP/1.1");
+        return version.equals("HTTP/1.1");
     }
 
     private boolean headerMapCheck() {

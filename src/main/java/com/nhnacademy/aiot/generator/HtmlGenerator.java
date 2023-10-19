@@ -14,7 +14,7 @@ public class HtmlGenerator {
     }
 
     public static String generate(String message) {
-        File file = new File("www/exception.html");
+        File file = new File(HtmlGenerator.class.getClassLoader().getResource("www/exception.html").getFile());
 
         StringBuilder contents = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
