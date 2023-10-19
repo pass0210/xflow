@@ -1,14 +1,17 @@
 package com.nhnacademy.aiot.generator;
 
+import com.nhnacademy.aiot.message.RequestMessage;
+import com.nhnacademy.aiot.message.body.Body;
+import com.nhnacademy.aiot.message.header.RequestHeader;
+import lombok.extern.slf4j.Slf4j;
+
 import java.net.Socket;
 import java.util.Iterator;
 
-import com.nhnacademy.aiot.message.header.RequestHeader;
-import com.nhnacademy.aiot.message.RequestMessage;
-import com.nhnacademy.aiot.message.body.Body;
-
+@Slf4j
 public class RequestMessageGenerator {
     public RequestMessage generateMessage(String header, String body, Socket socket) {
+        log.info("{}: 요청 메시지 생성", socket.getInetAddress());
         RequestHeader requestHeader = generateHeader(header);
         Body requestBody = generateBody(body);
 

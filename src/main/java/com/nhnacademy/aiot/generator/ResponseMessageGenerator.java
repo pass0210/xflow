@@ -1,11 +1,13 @@
 package com.nhnacademy.aiot.generator;
 
-import java.net.Socket;
-
-import com.nhnacademy.aiot.message.header.ResponseHeader;
 import com.nhnacademy.aiot.message.ResponseMessage;
 import com.nhnacademy.aiot.message.body.Body;
+import com.nhnacademy.aiot.message.header.ResponseHeader;
+import lombok.extern.slf4j.Slf4j;
 
+import java.net.Socket;
+
+@Slf4j
 public class ResponseMessageGenerator {
 
     private ResponseHeader header;
@@ -17,6 +19,7 @@ public class ResponseMessageGenerator {
     }
 
     public ResponseMessage generate(Socket socket) {
+        log.info("{}: 응답 메시지 생성", socket.getInetAddress());
         return new ResponseMessage(header, body, socket);
     }
 

@@ -25,6 +25,7 @@ public class InitialProcessor extends InputOutputNode {
     while (!Thread.currentThread().isInterrupted()) {
       try {
         Message requestMessage = tryGetMessage();
+        log.info("{}: 메시지를 받음", requestMessage.getSocket().getInetAddress());
 
         File file = new File("www/index.html");
         try (BufferedReader fileReader = new BufferedReader(new FileReader(file))) {
