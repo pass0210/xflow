@@ -1,7 +1,5 @@
 package com.nhnacademy.aiot.port;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -14,7 +12,7 @@ public class Port {
         messageQueue = new LinkedBlockingQueue<>();
     }
 
-    public void put(Message message) throws InterruptedException{
+    public void put(Message message) throws InterruptedException {
         messageQueue.put(message);
     }
 

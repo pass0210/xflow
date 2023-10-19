@@ -16,7 +16,7 @@ public class TraceNode extends InputNode {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 ExceptionMessage message = (ExceptionMessage) tryGetMessage();
-                log.info("{}: 메시지를 받음", message.getSocket().getInetAddress());
+                log.info("[Client {}]: 메시지를 받음", message.getHeader().getId());
 
                 String ip = message.getSocket().getInetAddress().toString();
                 String method = ((RequestHeader) message.getHeader()).getMethod();

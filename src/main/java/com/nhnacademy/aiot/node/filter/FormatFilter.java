@@ -66,6 +66,7 @@ public class FormatFilter extends OutputNode {
                             RequestMessageGenerator messageGenerator = new RequestMessageGenerator();
                             RequestMessage requestMessage = messageGenerator.generateMessage(headerString, bodyString,
                                     socket);
+                            log.info("[Client {}]: 요청 메시지 생성", requestMessage.getHeader().getId());
 
                             output(0, requestMessage);
                         } else {
