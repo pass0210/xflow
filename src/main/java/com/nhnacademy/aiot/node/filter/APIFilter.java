@@ -12,6 +12,7 @@ import com.nhnacademy.aiot.message.header.ResponseHeader;
 import com.nhnacademy.aiot.node.InputOutputNode;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
