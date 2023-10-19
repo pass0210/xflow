@@ -1,7 +1,10 @@
 package com.nhnacademy.aiot.checker;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Iterator;
 
+@Slf4j
 public class FormatChecker implements Checker {
     private String header;
     private String body;
@@ -13,6 +16,7 @@ public class FormatChecker implements Checker {
 
     @Override
     public boolean check() {
+        log.info("Format 체크 접근");
         String firstLine = header.lines().findFirst().get();
         String[] splitFirstLine = firstLine.split(" ");
         String method = splitFirstLine[0];
@@ -22,19 +26,11 @@ public class FormatChecker implements Checker {
     }
 
     private boolean methodCheck(String method) {
-        if (method.matches("^(?!GET$|POST$|DELETE$|PUT$).*")) {
-            return false;
-        }
-
-        return true;
+        return !method.matches("^(?!GET$|POST$|DELETE$|PUT$).*");
     }
 
     private boolean versionCheck(String version) {
-        if (!version.equals("HTTP/1.1")) {
-            return false;
-        }
-
-        return true;
+        return version.equals("HTTP/1.1");
     }
 
     private boolean headerMapCheck() {

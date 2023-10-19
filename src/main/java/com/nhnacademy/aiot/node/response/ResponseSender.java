@@ -21,6 +21,7 @@ public class ResponseSender extends InputNode {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 Message message = tryGetMessage();
+                log.info("[Client {}]: 메시지를 받음", message.getHeader().getId());
 
                 Socket socket = message.getSocket();
 

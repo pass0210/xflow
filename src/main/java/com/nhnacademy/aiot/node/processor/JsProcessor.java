@@ -1,17 +1,16 @@
 package com.nhnacademy.aiot.node.processor;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-
-import com.nhnacademy.aiot.message.header.ResponseHeader;
+import com.nhnacademy.aiot.generator.ResponseMessageGenerator;
 import com.nhnacademy.aiot.message.Message;
 import com.nhnacademy.aiot.message.ResponseMessage;
 import com.nhnacademy.aiot.message.body.Body;
-import com.nhnacademy.aiot.generator.ResponseMessageGenerator;
+import com.nhnacademy.aiot.message.header.ResponseHeader;
 import com.nhnacademy.aiot.node.InputOutputNode;
-
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 @Slf4j
 public class JsProcessor extends InputOutputNode {
@@ -25,8 +24,9 @@ public class JsProcessor extends InputOutputNode {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 Message requestMessage = tryGetMessage();
+                log.info("[Client {}]: 메시지를 받음", requestMessage.getHeader().getId());
 
-                File file = new File("www/common.js");
+                File file = new File(getClass().getClassLoader().getResource("www/common.js").getFile());
                 try (FileReader reader = new FileReader(file)) {
                     // index.html 파일 읽어 body 담기
                     StringBuilder contents = new StringBuilder();

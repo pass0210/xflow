@@ -35,6 +35,7 @@ public class FormatFilter extends OutputNode {
                 // TODO
                 // 쓰레드 따로 클래스로 뺄지 FormatFilter 멀티스레드 환경 구축할지 결정
 
+                log.info("{}: 소켓 연결", socket.getInetAddress());
                 new Thread(() -> {
                     try {
                         StringBuilder builder = new StringBuilder();
@@ -65,6 +66,7 @@ public class FormatFilter extends OutputNode {
                             RequestMessageGenerator messageGenerator = new RequestMessageGenerator();
                             RequestMessage requestMessage = messageGenerator.generateMessage(headerString, bodyString,
                                     socket);
+                            log.info("[Client {}]: 요청 메시지 생성", requestMessage.getHeader().getId());
 
                             output(0, requestMessage);
                         } else {

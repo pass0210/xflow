@@ -1,5 +1,14 @@
 package com.nhnacademy.aiot.node.processor;
 
+import com.nhnacademy.aiot.generator.ResponseMessageGenerator;
+import com.nhnacademy.aiot.message.Message;
+import com.nhnacademy.aiot.message.ResponseMessage;
+import com.nhnacademy.aiot.message.body.Body;
+import com.nhnacademy.aiot.message.header.ResponseHeader;
+import com.nhnacademy.aiot.node.InputOutputNode;
+import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,17 +17,6 @@ import java.net.Socket;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
-import com.nhnacademy.aiot.message.Message;
-import org.json.JSONObject;
-
-import com.nhnacademy.aiot.message.header.ResponseHeader;
-import com.nhnacademy.aiot.message.ResponseMessage;
-import com.nhnacademy.aiot.message.body.Body;
-import com.nhnacademy.aiot.generator.ResponseMessageGenerator;
-import com.nhnacademy.aiot.node.InputOutputNode;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class HumidityProcessor extends InputOutputNode {
@@ -33,6 +31,7 @@ public class HumidityProcessor extends InputOutputNode {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 Message message = tryGetMessage();
+                log.info("[Client {}]: 메시지를 받음", message.getHeader().getId());
                 Socket socket = message.getSocket();
 
                 try {
