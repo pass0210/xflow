@@ -1,7 +1,12 @@
 package com.nhnacademy.aiot.generator;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class HtmlGenerator {
     public static String generate(String message) {
+        log.info("Exception Html 생성 접근");
+
         return "<!DOCTYPE html>" +
                 "<html lang=\"ko\">" +
                 "<head>" +

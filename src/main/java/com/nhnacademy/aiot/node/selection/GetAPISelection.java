@@ -18,6 +18,7 @@ public class GetAPISelection extends InputOutputNode {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 Message message = tryGetMessage();
+                log.info("{}: 메시지를 받음", message.getSocket().getInetAddress());
                 String api = takeApi(message);
 
                 if (api.matches("/")) {

@@ -1,9 +1,12 @@
 package com.nhnacademy.aiot.checker;
 
+import com.nhnacademy.aiot.message.header.Header;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.List;
 import java.util.Map;
-import com.nhnacademy.aiot.message.header.Header;
 
+@Slf4j
 public class APIChecker implements Checker {
     private Map<String, List<String>> headerMap;
     private Header header;
@@ -15,6 +18,7 @@ public class APIChecker implements Checker {
 
     @Override
     public boolean check() {
+        log.info("{}: API 체크 접근", header.getFristHeaderLine());
         String[] splitString = header.getFristHeaderLine().split(" ");
         String method = splitString[0];
         String api = splitString[1];

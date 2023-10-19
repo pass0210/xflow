@@ -17,6 +17,7 @@ public class HttpResponseNode extends InputOutputNode {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 Message message = tryGetMessage();
+                log.info("{}: 메시지를 받음", message.getSocket().getInetAddress());
 
                 if (message instanceof ResponseMessage) {
                     output(0, message);

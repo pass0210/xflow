@@ -1,18 +1,19 @@
 package com.nhnacademy.aiot.node.filter;
 
-import java.util.List;
-import java.util.Map;
-import com.nhnacademy.aiot.message.header.RequestHeader;
-import com.nhnacademy.aiot.message.header.ResponseHeader;
+import com.nhnacademy.aiot.checker.APIChecker;
+import com.nhnacademy.aiot.generator.HtmlGenerator;
+import com.nhnacademy.aiot.generator.ResponseMessageGenerator;
 import com.nhnacademy.aiot.message.ExceptionMessage;
 import com.nhnacademy.aiot.message.Message;
 import com.nhnacademy.aiot.message.ResponseMessage;
 import com.nhnacademy.aiot.message.body.Body;
+import com.nhnacademy.aiot.message.header.RequestHeader;
+import com.nhnacademy.aiot.message.header.ResponseHeader;
 import com.nhnacademy.aiot.node.InputOutputNode;
 import lombok.extern.slf4j.Slf4j;
-import com.nhnacademy.aiot.checker.APIChecker;
-import com.nhnacademy.aiot.generator.HtmlGenerator;
-import com.nhnacademy.aiot.generator.ResponseMessageGenerator;
+
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 public class APIFilter extends InputOutputNode {
@@ -28,6 +29,7 @@ public class APIFilter extends InputOutputNode {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 Message message = tryGetMessage();
+                log.info("{}: 메시지를 받음", message.getSocket().getInetAddress());
 
                 RequestHeader header = (RequestHeader) message.getHeader();
                 APIChecker apiChecker = new APIChecker(map, header);

@@ -1,7 +1,6 @@
 package com.nhnacademy.aiot.node.trace;
 
 import com.nhnacademy.aiot.message.ExceptionMessage;
-import com.nhnacademy.aiot.message.Message;
 import com.nhnacademy.aiot.message.header.RequestHeader;
 import com.nhnacademy.aiot.node.InputNode;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +16,7 @@ public class TraceNode extends InputNode {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 ExceptionMessage message = (ExceptionMessage) tryGetMessage();
+                log.info("{}: 메시지를 받음", message.getSocket().getInetAddress());
 
                 String ip = message.getSocket().getInetAddress().toString();
                 String method = ((RequestHeader) message.getHeader()).getMethod();
