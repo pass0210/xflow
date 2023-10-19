@@ -4,6 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class HtmlGenerator {
+
+    private HtmlGenerator() {
+    }
+
     public static String generate(String message) {
         log.info("Exception Html 생성 접근");
 

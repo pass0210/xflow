@@ -33,7 +33,7 @@ public class DeviceIdInfoProcessor extends InputOutputNode {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 Message message = tryGetMessage();
-                log.info("{}: 메시지를 받음", message.getSocket().getInetAddress());
+                log.info("[Client {}]: 메시지를 받음", message.getHeader().getId());
                 Socket socket = message.getSocket();
                 RequestHeader requestHeader = (RequestHeader) message.getHeader();
                 String resource = requestHeader.getResource();
@@ -84,7 +84,8 @@ public class DeviceIdInfoProcessor extends InputOutputNode {
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
-                    ExceptionMessage exceptionMessage = new ExceptionMessage(requestHeader, new Body("Not Found Device"),
+                    ExceptionMessage exceptionMessage = new ExceptionMessage(requestHeader,
+                            new Body("Not Found Device"),
                             message.getSocket());
 
                     String htmlData = HtmlGenerator.generate("404 Not Found");

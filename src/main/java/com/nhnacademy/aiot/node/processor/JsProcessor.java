@@ -24,7 +24,7 @@ public class JsProcessor extends InputOutputNode {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 Message requestMessage = tryGetMessage();
-                log.info("{}: 메시지를 받음", requestMessage.getSocket().getInetAddress());
+                log.info("[Client {}]: 메시지를 받음", requestMessage.getHeader().getId());
 
                 File file = new File("www/common.js");
                 try (FileReader reader = new FileReader(file)) {

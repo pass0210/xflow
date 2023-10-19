@@ -27,7 +27,7 @@ public class DeviceAllInfoProcessor extends InputOutputNode {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 Message requestMessage = tryGetMessage();
-                log.info("{}: 메시지를 받음", requestMessage.getSocket().getInetAddress());
+                log.info("[Client {}]: 메시지를 받음", requestMessage.getHeader().getId());
 
                 try {
                     // URL 객체 생성
@@ -43,34 +43,33 @@ public class DeviceAllInfoProcessor extends InputOutputNode {
                     int responseCode = connection.getResponseCode();
 
                     if (responseCode == HttpURLConnection.HTTP_OK) {
-                    // 응답 데이터를 읽어옴
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    StringBuilder response = new StringBuilder();
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        response.append(line);
+                        // 응답 데이터를 읽어옴
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                        StringBuilder response = new StringBuilder();
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            response.append(line);
+                        }
+                        reader.close();
+
+                        // body 생성
+                        Body body = new Body(response.toString());
+
+                        // Header 생성
+                        ResponseHeader header = new ResponseHeader("200", "OK");
+                        header.addHeader("Content-Type", "text/plain; charset=utf-8");
+                        header.addHeader("Content-Length", String.valueOf(body.getData().length()));
+
+                        // Message 만들기
+                        ResponseMessageGenerator messageGenerator = new ResponseMessageGenerator(header, body);
+                        ResponseMessage responseMessage = messageGenerator.generate(requestMessage.getSocket());
+
+                        // output
+                        output(0, responseMessage);
+                    } else {
+                        log.error("API 요청 실패. 응답 코드: {}" + responseCode);
+
                     }
-                    reader.close();
-
-                    
-                    // body 생성
-                    Body body = new Body(response.toString());
-                    
-                    // Header 생성
-                    ResponseHeader header = new ResponseHeader("200", "OK");
-                    header.addHeader("Content-Type", "text/plain; charset=utf-8");
-                    header.addHeader("Content-Length", String.valueOf(body.getData().length()));
-
-                    // Message 만들기
-                    ResponseMessageGenerator messageGenerator = new ResponseMessageGenerator(header, body);
-                    ResponseMessage responseMessage = messageGenerator.generate(requestMessage.getSocket());
-
-                    // output
-                    output(0, responseMessage);
-                } else {
-                    log.error("API 요청 실패. 응답 코드: {}" + responseCode);
-
-                }
 
                 } catch (IOException e) {
                     log.error(e.getMessage());
@@ -79,6 +78,6 @@ public class DeviceAllInfoProcessor extends InputOutputNode {
                 Thread.currentThread().interrupt();
                 log.error(e.getMessage());
             }
-        } 
+        }
     }
 }
